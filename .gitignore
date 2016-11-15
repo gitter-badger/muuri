@@ -1,0 +1,16 @@
+# Dirs:
+bin
+lib
+lib64
+share
+.idea
+dist
+
+__pycache__/
+
+# Files:
+pip-selfcheck.json
+pyvenv.cfg
+*.egg-info
+*.ini
+*.py[cod]
