@@ -7,15 +7,13 @@ from pyramid.config import Configurator
 from pyramid.events import NewRequest
 from pyramid.events import subscriber
 
-from pyramid_beaker import session_factory_from_settings
-
-from pyramid.authentication import AuthTktAuthenticationPolicy
-from pyramid.authorization import ACLAuthorizationPolicy
+from beaker.middleware import SessionMiddleware
 
 from sqlalchemy import engine_from_config
 
 from .database import DBSession
-
+from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.authentication import SessionAuthenticationPolicy
 
 @subscriber(NewRequest)
 def ReqLanguage(event: NewRequest):
@@ -24,30 +22,29 @@ def ReqLanguage(event: NewRequest):
     """
     request = event.request.path
     if request.count("/") >= 2 and len(request) >= 4:
-        event.request.locale_name = request[1:].split("/", 1)[0]
+        lang = request[1:].split("/", 1)[0]
+        if not lang.isalpha():
+            import pyramid.httpexceptions as exc
+            raise exc.HTTPInternalServerError("Invalid language")
+
+        event.request.locale_name = lang
+
 
 
 def main(global_config, **settings):
     config = Configurator(settings=settings)
 
+    config.add_translation_dirs('locale')
+
+    # Includes
     config.include('pyramid_chameleon')
     config.include('pyramid_layout')
     config.include('pyramid_tm')
     config.include("pyramid_beaker")
-
-    session_factory = session_factory_from_settings(settings)
-    config.set_session_factory(session_factory)
-    authn_policy = AuthTktAuthenticationPolicy(debug = True, secret = 'verysecret', hashalg = 'sha512')
-    authz_policy = ACLAuthorizationPolicy()
-    config.set_authentication_policy(authn_policy)
-    config.set_authorization_policy(authz_policy)
-
-    config.add_static_view('static', 'static', cache_max_age=1)
-
-    config.add_translation_dirs('locale')
-
     config.include('include.urli18n')
     config.include('include.layouts')
+
+    config.add_static_view('static', 'static', cache_max_age=1)
 
     config.add_localized_route('home', '/')
     config.add_localized_route('login', '/login')
@@ -56,6 +53,15 @@ def main(global_config, **settings):
     engine = engine_from_config(settings, 'sqlalchemy.', implicit_returning = False)
     DBSession.configure(bind = engine)
 
+    authn_policy = SessionAuthenticationPolicy()
+    authz_policy = ACLAuthorizationPolicy()
+    config.set_authentication_policy(authn_policy)
+    config.set_authorization_policy(authz_policy)
+
     config.scan()
 
-    return config.make_wsgi_app()
+    # Start app
+    app = config.make_wsgi_app()
+    app = SessionMiddleware(app)
+
+    return app

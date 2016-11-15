@@ -94,10 +94,11 @@ Login
 """
 @view_config(route_name = 'login', renderer = 'templates/login.pt')
 def app_login_view(request: Request):
+    import pyramid.httpexceptions as exc
+
     if request.authenticated_userid:
         # Already logged in -> redirect
-        import pyramid.httpexceptions as exc
-        return exc.HTTPFound(request.route_path('home'))
+        return exc.HTTPFound(request.route_path('home'), comment = "Logged in user tried to log in")
 
     user_not_found_error = {
         'page_background': 'warning',
@@ -119,13 +120,7 @@ def app_login_view(request: Request):
 
     try:
         ses = um.create_session(form_user, form_password)
-        request.session['userid'] = ses['userid']
-        request.session.save()
-
-        remember(request, ses['userid'])
-        log.debug(ses)
-        request.session['userid'] = ses['userid']
-        request.session.save()
+        return exc.HTTPFound(location = request.route_path('home'), headers = remember(request, ses['userid']), comment = "Login")
     except UserNotFoundException as exc:
         log.debug("User '%s' not found in database", form_user)
         return user_not_found_error
@@ -133,7 +128,6 @@ def app_login_view(request: Request):
         raise
 
     # Redirect to front page
-    import pyramid.httpexceptions as exc
     return exc.HTTPFound(request.route_path('home'))
 
 
@@ -141,8 +135,8 @@ def app_login_view(request: Request):
 def app_logout_view(request: Request):
     if not request.authenticated_userid:
         import pyramid.httpexceptions as exc
-        return exc.HTTPFound(request.route_path('home'))
+        return exc.HTTPFound(request.route_path('home'), comment = "Logged out user tried to logout")
 
     # Redirect to front page
     import pyramid.httpexceptions as exc
-    return exc.HTTPFound(request.route_path('home'))
+    return exc.HTTPFound(request.route_path('home'), forget(request))
