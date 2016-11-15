@@ -1,0 +1,10 @@
+<metal:block use-macro="load: default_layout.pt" i18n:domain="app">
+  <metal:slot fill-slot="content">
+  <div class="row">
+    <div class="col-md-4">
+      <p i18n:translate="">Hello World.</p>
+      <p>${out}</p>
+    </div> <!-- col -->
+  </div> <!-- row -->
+  </metal:slot>
+</metal:block>

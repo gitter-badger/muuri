@@ -1,0 +1,8 @@
+<metal:block i18n:domain="app">
+<div class="jumbotron">
+  <div class="container bg-danger">
+    <h1 i18n:translate="">Error</h1>
+    <p i18n:translate="">Something bad happened.</p>
+  </div>
+</div>
+</metal:block>

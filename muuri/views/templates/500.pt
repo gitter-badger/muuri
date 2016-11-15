@@ -1,0 +1,5 @@
+<div metal:use-macro="load: default_layout.pt" i18n:domain="app">
+    <div metal:fill-slot="content">
+        <p i18n:translate="">500!</p>
+    </div>
+</div>

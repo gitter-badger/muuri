@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" tal:attributes="lang request.locale_name" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="app">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" i18n:attributes="content" content="description" />
+    <meta name="author" content="Pekka Järvinen" />
+    <link rel="shortcut icon" type="image/png" href="/static/favicon.png" />
+
+    <title>muuri</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+
+    <link href="/static/jumbotron.css" rel="stylesheet">
+
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.11.2/dojo/dojo.js"></script>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" tal:attributes="href request.route_path('home')" i18n:translate="">Home</a>
+          <metal:block tal:condition="request.authenticated_userid" use-macro="load: main_menu.pt"></metal:block>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <metal:block tal:condition="not request.authenticated_userid" use-macro="load: form_login.pt"></metal:block>
+          <metal:block tal:condition="request.authenticated_userid" use-macro="load: form_logout.pt"></metal:block>
+        </div><!--/.navbar-collapse -->
+
+      </div> <!-- container -->
+    </nav>
+
+    <metal:content define-slot="jumbotron" />
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <metal:content define-slot="content" />
+
+      <hr />
+
+      <metal:block use-macro="load: footer.pt"></metal:block>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
+

@@ -1,0 +1,10 @@
+<metal:block use-macro="load: default_layout.pt" i18n:domain="app">
+<metal:slot fill-slot="content">
+<div class="row">
+  <div class="col-md-4">
+    <h2 i18n:translate="">403 - Forbidden</h2>
+    <p i18n:translate="">Forbidden</p>
+  </div> <!-- col -->
+</div> <!-- row -->
+</metal:slot>
+</metal:block>

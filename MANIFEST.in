@@ -1,0 +1,2 @@
+include *.txt *.ini *.cfg *.rst *.sh *.conf
+recursive-include muuri *.png *.css *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml *.po *.mo *.pot

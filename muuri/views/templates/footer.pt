@@ -1,0 +1,10 @@
+<metal:block i18n:domain="app">
+  <footer>
+    <p>
+      |
+      &copy; 2016- Pekka Järvinen | <a href="https://raspi.github.io/projects/muuri" i18n:translate="">Project homepage</a> |
+      <span i18n:translate>Language:</span> <metal:block use-macro="load: languages.pt"></metal:block>
+      |
+    </p>
+  </footer>
+</metal:block>

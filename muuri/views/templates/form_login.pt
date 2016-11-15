@@ -1,0 +1,13 @@
+<metal:block i18n:domain="app">
+  <!-- Login form -->
+  <form class="navbar-form navbar-right" method="post" tal:attributes="action request.route_path('login')" action="">
+    <div class="form-group">
+      <input name="user" type="text" i18n:attributes="placeholder" placeholder="User" class="form-control" tal:attributes="value request.POST.get('user')" value="">
+    </div>
+    <div class="form-group">
+      <input name="password" type="password" i18n:attributes="placeholder" placeholder="Password" class="form-control" value="">
+    </div>
+    <button name="submit" type="submit" class="btn btn-success" i18n:translate="">Sign in</button>
+  </form>
+  <!-- /Login form -->
+ </metal:block>>
