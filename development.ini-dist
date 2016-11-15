@@ -1,0 +1,86 @@
+[app:main]
+use = egg:muuri
+
+sqlalchemy.url = postgresql+pg8000://muuri:muuri@127.0.0.1/muuri
+sqlalchemy.isolation_level= READ COMMITTED
+sqlalchemy.client_encoding= utf8
+#sqlalchemy.poolclass = NullPool
+sqlalchemy.pool_size = 10
+sqlalchemy.pool_timeout = 5
+sqlalchemy.pool_logging_name = dbconnpool
+sqlalchemy.max_overflow = 15
+sqlalchemy.echo = True
+sqlalchemy.echo_pool = True
+sqlalchemy.logging_name = dbconn
+
+script_location = %(here)s/alembic
+file_template = %%(rev)s_%%(slug)s
+output_encoding = utf-8
+revision_environment = true
+
+beaker.cache.regions = default_term, second, short_term, long_term
+beaker.cache.type = memory
+beaker.cache.second.expire = 60
+beaker.cache.short_term.expire = 120
+beaker.cache.default_term.expire = 300
+beaker.cache.long_term.expire = 3600
+
+beaker.session.type = memory
+beaker.session.key = muuri
+beaker.session.secret = oY6lvWiXMIEdmU8Phuw1MW1TjvvVXnOe0bpG00gmJcRoyeUhrfREYHYJLM3UCcK
+
+pyramid.reload_templates = true
+pyramid.debug_authorization = true
+pyramid.debug_notfound = false
+pyramid.debug_routematch = false
+pyramid.default_locale_name = en
+pyramid.includes =
+    pyramid_debugtoolbar
+
+[server:main]
+use = egg:waitress#main
+host = 127.0.0.1
+port = 60606
+#unix_socket_perms = 0o777
+#unix_socket = %(here)s/muuri.sock
+
+[loggers]
+keys = root, muuri
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = DEBUG
+handlers = console
+
+[logger_muuri]
+level = DEBUG
+handlers =
+qualname = muuri
+
+[logger_waitress]
+level = DEBUG
+
+[logger_sqlalchemy]
+level = DEBUG
+handlers =
+qualname = sqlalchemy.engine
+
+[logger_alembic]
+level = DEBUG
+handlers =
+qualname = alembic
+
+[formatter_generic]
+format = %(asctime)s %(levelname)-5.5s [%(name)s:%(lineno)s][%(threadName)s] %(message)s
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = DEBUG
+formatter = generic
+
