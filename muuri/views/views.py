@@ -99,8 +99,6 @@ def app_login_view(request: Request):
         import pyramid.httpexceptions as exc
         return exc.HTTPFound(request.route_path('home'))
 
-    pyramid_tm.create_tm(request)
-
     user_not_found_error = {
         'page_background': 'warning',
         'page_title':      _(u"Login failed"),

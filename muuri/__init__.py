@@ -3,16 +3,19 @@ import logging
 log = logging.getLogger(__name__)
 
 from pyramid.config import Configurator
+
 from pyramid.events import NewRequest
 from pyramid.events import subscriber
-from pyramid_beaker import session_factory_from_settings
-from pyramid.authentication import AuthTktAuthenticationPolicy
 
+from pyramid_beaker import session_factory_from_settings
+
+from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+
 from sqlalchemy import engine_from_config
 
-from .database import Base
 from .database import DBSession
+
 
 @subscriber(NewRequest)
 def ReqLanguage(event: NewRequest):
@@ -50,7 +53,7 @@ def main(global_config, **settings):
     config.add_localized_route('login', '/login')
     config.add_localized_route('logout', '/logout')
 
-    engine = engine_from_config(settings, 'sqlalchemy.')
+    engine = engine_from_config(settings, 'sqlalchemy.', implicit_returning = False)
     DBSession.configure(bind = engine)
 
     config.scan()

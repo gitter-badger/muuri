@@ -5,8 +5,8 @@ log = logging.getLogger(__name__)
 import transaction
 import sqlalchemy.orm.exc as a_exc
 from sqlalchemy import func
+
 from ..models import ModelBase
-from ..database import DBSession
 from ..database import User
 
 class UserNotFoundException(ValueError):
@@ -14,18 +14,12 @@ class UserNotFoundException(ValueError):
 
 class UserModel(ModelBase):
     def get_user(self, login):
-        ses = DBSession()
         u = None
 
         try:
-            transaction.begin()
-            u = ses.query(User).filter(User.login == login).one()
-            transaction.commit()
+            u = self.ses.query(User).filter(User.login == login).one()
         except a_exc.NoResultFound as exc:
-            transaction.abort()
             raise UserNotFoundException(exc)
-        finally:
-            ses.close()
 
         if u is not None:
             return u
@@ -33,15 +27,19 @@ class UserModel(ModelBase):
         raise UserNotFoundException()
 
     def get_user_count(self):
-        ses = DBSession()
-        transaction.begin()
-        u = ses.query(func.count(User.id)).scalar()
-        transaction.commit()
-        ses.close()
+        u = self.ses.query(func.count(User.id)).scalar()
         return u
 
     def create_session(self, login, password):
-        u = self.get_user(login)
+        u = None
+
+        try:
+            u = self.get_user(login)
+        except:
+            raise
+
+        if u is None:
+            raise UserNotFoundException()
 
         password = password.encode('utf-8')
         verified = False
@@ -54,6 +52,11 @@ class UserModel(ModelBase):
 
         if verified != True:
             raise Exception("Coulnd't verify password hash")
+
+        from ..models import LoginLogModel
+
+        lm = LoginLogModel()
+        lm.add_log(u.id)
 
         return {'userid': u.id}
 
@@ -72,18 +75,14 @@ class UserModel(ModelBase):
         if verified != True:
             raise Exception("Coulnd't verify password hash")
 
-        ses = DBSession()
-
         try:
             transaction.begin()
-            ses.add(User(login = login, password = encrypted_pw.decode()))
+            self.ses.add(User(login = login, password = encrypted_pw.decode()))
             transaction.commit()
             log.debug("User added: '%s'", login)
         except Exception as exc:
             transaction.abort()
             log.debug("User add failed for user '%s'", login)
             raise
-        finally:
-            ses.close()
 
         return True
