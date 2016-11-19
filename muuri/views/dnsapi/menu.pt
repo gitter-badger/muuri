@@ -1,0 +1,11 @@
+<metal:block i18n:domain="app">
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- MENU -->
+            <a class="navbar-brand" href="/" tal:attributes="href request.route_path('dnsapi.add')" i18n:translate="">Add</a>
+            <!-- /MENU -->
+        </div> <!-- col -->
+    </div> <!-- row -->
+
+</metal:block>

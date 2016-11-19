@@ -1,3 +1,3 @@
 <metal:block i18n:domain="app">
-  ....
+  <a class="navbar-brand" href="/" tal:attributes="href request.route_path('dnsapi.home')" i18n:translate="">DNS Api</a>
 </metal:block>

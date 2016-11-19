@@ -16,13 +16,16 @@ DBSession = scoped_session(
     sessionmaker(
         extension=ZopeTransactionExtension(),
     ),
+
 )
 
 Base = declarative_base()
 Base.metadata = metadata
 Base.query = DBSession.query_property()
 
-#
+# Imports:
 
 from .user import User
 from .loginlog import LoginLog
+from .dnsapi import DnsApi
+

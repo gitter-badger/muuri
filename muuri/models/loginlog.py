@@ -13,7 +13,7 @@ class LoginLogModel(ModelBase):
     def __init__(self):
         pass
 
-    def add_log(self, userid):
+    def add_log(self, userid:int):
         log.debug("User ID = %s", userid)
 
         try:

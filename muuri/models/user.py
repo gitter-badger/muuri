@@ -55,9 +55,6 @@ class UserModel(ModelBase):
 
         from ..models import LoginLogModel
 
-        lm = LoginLogModel()
-        lm.add_log(u.id)
-
         return {'userid': u.id}
 
     def add_user(self, login, password):

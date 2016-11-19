@@ -18,3 +18,4 @@ class ModelBase():
 from .user import UserModel
 from .user import UserNotFoundException
 from .loginlog import LoginLogModel
+from .dnsapi import DnsApiModel

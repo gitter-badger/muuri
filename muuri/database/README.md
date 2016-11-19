@@ -1,0 +1,1 @@
+Use database always through **models** directory classes!

@@ -30,11 +30,6 @@ class User(Base):
     password = Column(Unicode(255), nullable = False, server_default = text("''"))
     added = Column(TIMESTAMP, nullable = False, server_default = text("NOW()"))
 
-
-    @property
-    def __acl__(self):
-        return [(Allow, self.login, 'view'), ]
-
     def __init__(self, login = "", password = ""):
         self.login = login
         self.password = password

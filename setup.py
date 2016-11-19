@@ -12,29 +12,32 @@ classifiers = ["Programming Language :: Python", "Framework :: Pyramid",
                "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
                ]
 
-requires = ['pyramid',
-            'pyramid_chameleon',
-            'pyramid_layout',
-            'pyramid_tm',
-            'pyramid_beaker',
-            'pyramid_debugtoolbar',
-            # SQL:
-            'pg8000',
-            'SQLAlchemy >= 1.1.3',
-            'transaction',
-            'alembic >= 0.8.8',
-            'zope.sqlalchemy',
-            # Cryptography:
-            'passlib',
-            'bcrypt',
-            # WSGI:
-            'waitress',
-            # I18N:
-            'lingua',
-            'Babel',
-            # websocket server:
-            'autobahn',
-            ]
+requires = [
+    # WSGI:
+    'waitress',
+    # Pyramid:
+    'pyramid',
+    'pyramid_chameleon',
+    'pyramid_layout',
+    'pyramid_tm',
+    'pyramid_beaker',
+    'pyramid_debugtoolbar',
+    # I18N:
+    'lingua',
+    'Babel',
+    # SQL:
+    'pg8000',
+    'SQLAlchemy >= 1.1.3',
+    'transaction',
+    'alembic >= 0.8.8',
+    'zope.sqlalchemy',
+    # Cryptography:
+    'bcrypt',
+    # HTTP:
+    'requests',
+    # websocket server:
+    'autobahn',
+]
 
 entry_points = """
 [paste.app_factory]

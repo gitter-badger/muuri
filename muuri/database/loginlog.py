@@ -28,9 +28,5 @@ class LoginLog(Base):
     userid = Column(Integer, ForeignKey("users.id"), unique = False, nullable = False, server_default = text("-1"))
     logged_at = Column(TIMESTAMP, nullable = False, server_default = text("NOW()"))
 
-    @property
-    def __acl__(self):
-        return [(Allow, self.login, 'view'), ]
-
     def __init__(self, userid):
         self.userid = userid

@@ -1,0 +1,12 @@
+<metal:block use-macro="load: ../templates/default_layout.pt" i18n:domain="app">
+    <metal:slot fill-slot="content">
+
+        <metal:block use-macro="load: menu.pt" i18n:domain="app"></metal:block>
+
+        <div class="row">
+            <div class="col-md-4">
+                <p i18n:translate="">..List...</p>
+            </div> <!-- col -->
+        </div> <!-- row -->
+    </metal:slot>
+</metal:block>

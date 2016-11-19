@@ -1,0 +1,38 @@
+<metal:block use-macro="load: ../templates/default_layout.pt" i18n:domain="app">
+    <metal:slot fill-slot="content">
+
+        <metal:block use-macro="load: menu.pt" i18n:domain="app"></metal:block>
+
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post" tal:attributes="action request.route_path('dnsapi.add')" action="/">
+
+                    <select class="form-control" name="apitype" tal:repeat="item apitypes">
+                        <option value="${item.id}">${item.name}</option>
+                    </select>
+
+                    <div class="form-group">
+                        <label for="address" i18n:translate="">IP or hostname</label>
+                        <input id="address" type="text" class="form-control bg-danger" i18n:attributes="placeholder"
+                               placeholder="127.0.0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="port" i18n:translate="">Port</label>
+                        <input id="port" type="text" class="form-control" i18n:attributes="placeholder"
+                               placeholder="8053">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apikey" i18n:translate="">API key</label>
+                        <input id="apikey" type="text" class="form-control" i18n:attributes="placeholder"
+                               placeholder="very-secret-api-key">
+                    </div>
+
+                    <button type="submit" class="btn btn-success" i18n:translate="">Add</button>
+                </form>
+            </div> <!-- col -->
+        </div> <!-- row -->
+
+    </metal:slot>
+</metal:block>
