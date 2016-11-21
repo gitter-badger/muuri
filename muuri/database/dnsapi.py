@@ -21,13 +21,14 @@ class DnsApi(Base):
     __tablename__ = 'dnsapis'
 
     __table_args__ = (
-        CheckConstraint("port >= 1 && port <= 65535", name = __tablename__ + "_chk_port_range"),
-        CheckConstraint("apitype >= 0", name = __tablename__ + "_chk_api_type"),
+        CheckConstraint("port >= 1", name = __tablename__ + "_chk_port_range_low"),
+        CheckConstraint("port <= 65535", name = __tablename__ + "_chk_port_range_high"),
+        CheckConstraint("apitype >= 1", name = __tablename__ + "_chk_api_type"),
         CheckConstraint("host != ''", name = __tablename__ + "_chk_host_not_empty"),
     )
 
     id = Column(Integer, Sequence('dnsapi_id_seq'), primary_key = True)
-    apitype = Column(Integer, unique = False, nullable = False, server_default = text("0"))
+    apitype = Column(Integer, unique = False, nullable = False, server_default = text("-1"))
     apikey = Column(Unicode(255), unique = False, nullable = False, server_default = text("''"))
     password = Column(Unicode(255), unique = False, nullable = False, server_default = text("''"))
     host = Column(Unicode(255), unique = False, nullable = False, server_default = text("''"))

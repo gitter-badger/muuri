@@ -4,7 +4,6 @@ log = logging.getLogger(__name__)
 
 import transaction
 import sqlalchemy.orm.exc as a_exc
-from sqlalchemy import func
 
 from ..models import ModelBase
 from ..database import DnsApi

@@ -38,9 +38,6 @@ class UserModel(ModelBase):
         except:
             raise
 
-        if u is None:
-            raise UserNotFoundException()
-
         password = password.encode('utf-8')
         verified = False
 
@@ -52,8 +49,6 @@ class UserModel(ModelBase):
 
         if verified != True:
             raise Exception("Coulnd't verify password hash")
-
-        from ..models import LoginLogModel
 
         return {'userid': u.id}
 

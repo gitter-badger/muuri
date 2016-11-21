@@ -2,14 +2,19 @@ import logging
 
 log = logging.getLogger(__name__)
 
-def includeme(config):
-    config.add_static_view('static', 'static', cache_max_age = 1)
+from pyramid.security import NO_PERMISSION_REQUIRED
+from pyramid.security import Authenticated
 
-    config.add_localized_route('home', '/')
-    config.add_localized_route('login', '/login')
-    config.add_localized_route('logout', '/logout')
-    config.add_localized_route('session_id_validate', '/validate/{id}')
-    config.add_localized_route('dnsapi.home', '/dnsapi')
-    config.add_localized_route('dnsapi.add', '/dnsapi/add')
+from pyramid.config import Configurator
 
-    log.debug("Routes loaded")
+def includeme(config: Configurator):
+    config.add_static_view('static', 'muuri:static', cache_max_age = 10, permission = NO_PERMISSION_REQUIRED)
+
+    config.add_localized_route('home', '/', permission = NO_PERMISSION_REQUIRED)
+    config.add_localized_route('login', '/login', permission = NO_PERMISSION_REQUIRED)
+    config.add_localized_route('logout', '/logout', permission = 'admin')
+
+    config.add_localized_route('session_id_validate', '/validate/{id}', permission = 'admin')
+
+    config.add_localized_route('dnsapi.home', '/dnsapi', permission = 'admin')
+    config.add_localized_route('dnsapi.add', '/dnsapi/add', permission = 'admin')

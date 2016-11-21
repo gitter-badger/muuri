@@ -9,16 +9,13 @@ import logging
 
 log = logging.getLogger(__name__)
 
+from pyramid.config import Configurator
 
-@layout_config(name='chameleon', template='muuri:templates/default_layout.pt')
+@layout_config(name='app', template='muuri:templates/default_layout.pt')
 class AppLayout(object):
     def __init__(self, context, request: Request):
         pass
 
 
-def includeme(config):
-    """
-    Load
-    """
+def includeme(config: Configurator):
     config.add_layout(AppLayout, 'muuri:views/templates/default_layout.pt')
-    log.debug("included %s", __name__)

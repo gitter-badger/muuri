@@ -14,8 +14,6 @@ class LoginLogModel(ModelBase):
         pass
 
     def add_log(self, userid:int):
-        log.debug("User ID = %s", userid)
-
         try:
             transaction.begin()
             self.ses.add(LoginLog(userid = userid))

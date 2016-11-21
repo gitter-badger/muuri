@@ -1,44 +1,60 @@
-from pyramid.request import Request
-from pyramid.view import view_config
-
 import logging
 
 log = logging.getLogger(__name__)
 
+from pyramid.request import Request
+from pyramid.view import view_config
+from pyramid.view import view_defaults
+from pyramid.security import Allow
+from pyramid.security import ALL_PERMISSIONS
+
 from ..models import DnsApiModel
+from . import SecureView
 
 
-@view_config(route_name = 'dnsapi.home', renderer='dnsapi/home.pt')
-def home(request: Request):
-    m = DnsApiModel()
-    apilist = m.list_all()
+@view_defaults(permission = 'admin')
+class DnsApiViews(SecureView):
+    __parent__ = SecureView.__name__
 
-    log.debug(apilist)
+    @property
+    def __acl__(self):
+        return [
+            (Allow, 'admin', ALL_PERMISSIONS),
+        ]
 
-    return {'out': ''}
 
-@view_config(route_name = 'dnsapi.add', renderer='dnsapi/add.pt')
-def add(request: Request):
-    import pyramid.httpexceptions as exc
+    @view_config(route_name = 'dnsapi.home', renderer = 'dnsapi/home.pt')
+    def home(request: Request):
+        m = DnsApiModel()
+        apilist = m.list_all()
 
-    m = DnsApiModel()
-    types =  m.get_api_types()
+        log.debug(apilist)
 
-    api_types = []
+        return {'out': ''}
 
-    for i in types:
-        api_types.append({'id': i, 'name': types[i]['name']})
+    @view_config(route_name = 'dnsapi.add', renderer = 'dnsapi/add.pt')
+    def add(request: Request):
+        import pyramid.httpexceptions as exc
 
-    log.debug(request.method.lower())
+        m = DnsApiModel()
+        types = m.get_api_types()
 
-    if request.method.lower() is 'post':
-        form_apitype = request.POST.get('apitype')
-        form_address = request.POST.get('address')
-        form_port = request.POST.get('port')
-        form_apikey = request.POST.get('apikey')
-        form_apipass = request.POST.get('apipass')
-        m.add_api(apikey = form_apikey, apitype = form_apitype, host = form_address, port = form_port, password = form_apipass)
+        api_types = []
 
-        return exc.HTTPFound(location = request.route_path('dnsapi.home'), comment = "DNS API: Add")
+        for i in types:
+            api_types.append({'id': i, 'name': types[i]['name']})
 
-    return {'apitypes': api_types}
+        log.debug(request.method.lower())
+
+        if request.method.lower() is 'post':
+            form_apitype = request.POST.get('apitype')
+            form_address = request.POST.get('address')
+            form_port = request.POST.get('port')
+            form_apikey = request.POST.get('apikey')
+            form_apipass = request.POST.get('apipass')
+            m.add_api(apikey = form_apikey, apitype = form_apitype, host = form_address, port = form_port,
+                      password = form_apipass)
+
+            return exc.HTTPFound(location = request.route_path('dnsapi.home'), comment = "DNS API: Add")
+
+        return {'apitypes': api_types}

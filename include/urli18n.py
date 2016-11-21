@@ -5,17 +5,12 @@ Enable language in URL
 from pyramid.request import Request
 
 import logging
-from pyramid.httpexceptions import HTTPInternalServerError
 
 log = logging.getLogger(__name__)
 
-from pyramid.security import Deny
-
+from pyramid.config import Configurator
 
 def add_localized_route(config, name, pattern, factory=None, pregenerator=None, **kw):
-
-    if 'permission' not in kw:
-        kw['permission'] = Deny
 
     orig_factory = factory
 
@@ -45,9 +40,6 @@ def add_localized_route(config, name, pattern, factory=None, pregenerator=None, 
     config.add_route(name, new_pattern, factory=wrapper_factory, pregenerator=wrapper_pregenerator, **kw)
 
 
-def includeme(config):
-    """
-    Load
-    """
+def includeme(config: Configurator):
     config.add_directive('add_localized_route', add_localized_route)
-    log.debug("included %s", __name__)
+
