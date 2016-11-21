@@ -8,6 +8,9 @@ from pyramid.events import NewRequest
 from pyramid.events import subscriber
 
 from pyramid.security import Deny
+from pyramid.security import Allow
+from pyramid.security import ALL_PERMISSIONS
+from pyramid.security import Authenticated
 
 from pyramid.request import Request
 
@@ -21,15 +24,14 @@ from sqlalchemy import engine_from_config
 from .database import DBSession
 
 
-class AppRootFactory(object):
+class AppRootFactory:
     __parent__ = None
-    __name__ = "AppRootFactory"
 
     @property
     def __acl__(self):
         return [
-            (Allow, 'admin', ALL_PERMISSIONS),
-            (Allow, Authenticated, 'admin'),
+            (Allow, 'logged-in', ALL_PERMISSIONS),
+            (Allow, Authenticated, ALL_PERMISSIONS),
         ]
 
     def __init__(self, request: Request):
@@ -50,33 +52,12 @@ def ReqLanguage(event: NewRequest):
 
     event.request.locale_name = lang
 
-from pyramid.viewderivers import DefaultViewMapper
-
-class AppViewMapper(DefaultViewMapper):
-    def __init__(self, **kw):
-        self.attr = kw.get('attr')
-
-    def map_class(self, view):
-        ret = super().map_class(view)
-        #log.debug("="*60)
-        #log.debug("CLASS:")
-        #log.debug(vars(view))
-        #log.debug("="*60)
-        return ret
-
-    def map_nonclass(self, view):
-        ret = super().map_nonclass(view)
-        #log.debug("="*60)
-        #log.debug("NON CLASS:")
-        #log.debug(vars(view))
-        #log.debug("="*60)
-        return ret
 
 def main(global_config, **settings):
     config = Configurator(settings = settings)
-    config.set_default_permission(Deny)
+
     config.set_root_factory(AppRootFactory)
-    config.set_view_mapper(AppViewMapper)
+    config.set_default_permission(Deny)
 
     config.add_translation_dirs('locale')
 

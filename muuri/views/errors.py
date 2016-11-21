@@ -13,6 +13,8 @@ from pyramid.httpexceptions import HTTPInternalServerError
 from pyramid.view import view_config
 from pyramid.view import notfound_view_config
 from pyramid.view import forbidden_view_config
+from pyramid.security import NO_PERMISSION_REQUIRED
+
 
 @view_config(context = HTTPInternalServerError, renderer = 'templates/500.pt')
 def error_internal(request: Request):
@@ -48,4 +50,6 @@ def error_forbidden(request: Request):
     403
     """
     request.response.status = 403
+
+
     return {}

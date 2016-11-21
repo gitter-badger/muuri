@@ -21,7 +21,9 @@ requires = [
     'pyramid_layout',
     'pyramid_tm',
     'pyramid_beaker',
+    # Debug:
     'pyramid_debugtoolbar',
+    'ppretty',
     # I18N:
     'lingua',
     'Babel',

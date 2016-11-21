@@ -10,8 +10,10 @@ log = logging.getLogger(__name__)
 
 from pyramid.config import Configurator
 
-def add_localized_route(config, name, pattern, factory=None, pregenerator=None, **kw):
+from muuri import AppRootFactory
 
+
+def add_localized_route(config, name, pattern, factory = AppRootFactory, pregenerator = None, **kw):
     orig_factory = factory
 
     def wrapper_factory(request: Request):
@@ -37,9 +39,8 @@ def add_localized_route(config, name, pattern, factory=None, pregenerator=None, 
         new_pattern = pattern
 
     new_pattern = '/{lang}/' + new_pattern
-    config.add_route(name, new_pattern, factory=wrapper_factory, pregenerator=wrapper_pregenerator, **kw)
+    config.add_route(name, new_pattern, factory = wrapper_factory, pregenerator = wrapper_pregenerator, **kw)
 
 
 def includeme(config: Configurator):
     config.add_directive('add_localized_route', add_localized_route)
-

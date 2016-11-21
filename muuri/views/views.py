@@ -28,22 +28,11 @@ from . import BaseView
 
 import pyramid.httpexceptions as httpexs
 
-@view_config(route_name = 'session_id_validate', permission = 'admin')
-def validate_sesid(request: Request):
-    beakersession.id
-
+from muuri import AppRootFactory
 
 @view_defaults(permission = NO_PERMISSION_REQUIRED)
 class DefaultViews(BaseView):
-    __parent__ = BaseView.__name__
-
-    @property
-    def __acl__(self):
-        return [
-            (Allow, 'admin', ALL_PERMISSIONS),
-            (Allow, Authenticated, 'admin'),
-        ]
-
+    __parent__ = None
 
     def __init__(self, request: Request):
         self.request = request
@@ -121,8 +110,6 @@ class DefaultViews(BaseView):
 
             response = exc.HTTPFound(location = self.request.route_path('home'), headers = remember(self.request, ses['userid']), comment = "Login")
 
-            log.debug("RESPONSE = %s", vars(response))
-
             return response
         except UserNotFoundException as exc:
             log.debug("User '%s' not found in database", form_user)
@@ -134,7 +121,7 @@ class DefaultViews(BaseView):
         return exc.HTTPFound(self.request.route_path('home'))
 
 
-    @view_config(route_name = 'logout', renderer= 'templates/logout.pt', permission = 'admin')
+    @view_config(route_name = 'logout', renderer= 'templates/logout.pt', permission = 'logged-in')
     def logout(self):
         """
         Log out
@@ -145,4 +132,4 @@ class DefaultViews(BaseView):
 
         # Redirect to front page
         import pyramid.httpexceptions as exc
-        return exc.HTTPFound(self.request.route_path('login'), headers = forget(self.request))
+        return exc.HTTPFound(self.request.route_path('home'), headers = forget(self.request))

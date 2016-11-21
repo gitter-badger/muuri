@@ -17,7 +17,8 @@ class AppSessionPolicy(SessionAuthenticationPolicy):
         principals = []
         if request.authenticated_userid is not None:
             principals.append(Authenticated)
-            principals.append('admin')
+            principals.append((request.authenticated_userid))
+            principals.append('logged-in')
         return principals
 
     @staticmethod
@@ -25,7 +26,8 @@ class AppSessionPolicy(SessionAuthenticationPolicy):
         groups = []
         if userid is not None:
             groups.append(Authenticated)
-            groups.append('admin')
+            groups.append(userid)
+            groups.append('logged-in')
         return groups
 
 class AppACLPolicy(ACLAuthorizationPolicy):
@@ -38,7 +40,8 @@ class AppACLPolicy(ACLAuthorizationPolicy):
 def includeme(config: Configurator):
     ses_policy = AppSessionPolicy(callback = AppSessionPolicy.groupfinder, debug = True)
 
-    authz_policy = AppACLPolicy()
+    acl_policy = AppACLPolicy()
+
 
     config.set_authentication_policy(ses_policy)
-    config.set_authorization_policy(authz_policy)
+    config.set_authorization_policy(acl_policy)
