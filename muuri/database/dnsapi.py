@@ -27,7 +27,7 @@ class DnsApi(Base):
         CheckConstraint("host != ''", name = __tablename__ + "_chk_host_not_empty"),
     )
 
-    id = Column(Integer, Sequence('dnsapi_id_seq'), primary_key = True)
+    id = Column(Integer, Sequence(__tablename__ + '_id_seq'), primary_key = True)
     apitype = Column(Integer, unique = False, nullable = False, server_default = text("-1"))
     apikey = Column(Unicode(255), unique = False, nullable = False, server_default = text("''"))
     password = Column(Unicode(255), unique = False, nullable = False, server_default = text("''"))

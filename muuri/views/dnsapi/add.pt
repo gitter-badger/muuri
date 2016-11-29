@@ -5,7 +5,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <form method="post" tal:attributes="action request.route_path('dnsapi.add')" action="/">
+                <form method="post" action="">
 
                     <select class="form-control" name="apitype" tal:repeat="item apitypes">
                         <option value="${item.id}">${item.name}</option>
@@ -13,20 +13,21 @@
 
                     <div class="form-group">
                         <label for="address" i18n:translate="">IP or hostname</label>
-                        <input id="address" type="text" class="form-control bg-danger" i18n:attributes="placeholder"
-                               placeholder="127.0.0.1">
+                        <input name="address" type="text" class="form-control bg-danger" i18n:attributes="placeholder"
+                               placeholder="127.0.0.1" tal:attributes="value request.POST.get('address')" value="" />
                     </div>
 
                     <div class="form-group">
                         <label for="port" i18n:translate="">Port</label>
-                        <input id="port" type="text" class="form-control" i18n:attributes="placeholder"
-                               placeholder="8053">
+                        <input name="port" type="text" class="form-control" i18n:attributes="placeholder"
+                               placeholder="8053" tal:attributes="value request.POST.get('port')" value="" />
                     </div>
 
                     <div class="form-group">
                         <label for="apikey" i18n:translate="">API key</label>
-                        <input id="apikey" type="text" class="form-control" i18n:attributes="placeholder"
-                               placeholder="very-secret-api-key">
+                        <input name="apikey" type="text" class="form-control" i18n:attributes="placeholder"
+                               placeholder="very-secret-api-key" tal:attributes="value request.POST.get('apikey')"
+                               value="" />
                     </div>
 
                     <button type="submit" class="btn btn-success" i18n:translate="">Add</button>

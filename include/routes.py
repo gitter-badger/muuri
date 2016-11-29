@@ -18,5 +18,7 @@ def includeme(config: Configurator):
     # Modules:
     config.add_localized_route('dnsapi.home', '/dnsapi', permission = 'logged-in')
     config.add_localized_route('dnsapi.add', '/dnsapi/add', permission = 'logged-in')
+    config.add_localized_route('dnsapi.zones', '/dnsapi/{id}/zones', permission = 'logged-in')
+    config.add_localized_route('dnsapi.zone', '/dnsapi/{id}/zone/{zone}', permission = 'logged-in')
 
     config.add_route('test', '/test')

@@ -1,5 +1,6 @@
 <metal:block i18n:domain="app">
 
+    <!-- MENU -->
     <div class="row">
         <div class="col-md-4">
             <!-- MENU -->
@@ -7,5 +8,6 @@
             <!-- /MENU -->
         </div> <!-- col -->
     </div> <!-- row -->
+    <!-- /MENU -->
 
 </metal:block>

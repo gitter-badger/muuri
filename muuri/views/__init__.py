@@ -3,14 +3,11 @@ import logging
 log = logging.getLogger(__name__)
 
 from pyramid.request import Request
-from pyramid.security import Allow
-from pyramid.security import Authenticated
-from pyramid.security import DENY_ALL
-from pyramid.security import ALL_PERMISSIONS
-
+from pyramid.view import view_defaults
 
 class BaseView(object):
     __parent__ = None
+    request = None
 
     def __init__(self, request: Request):
         self.request = request
@@ -21,6 +18,7 @@ class BaseView(object):
         raise KeyError
 
 
+@view_defaults(permission = 'logged-in')
 class SecureView(BaseView):
     __parent__ = None
 

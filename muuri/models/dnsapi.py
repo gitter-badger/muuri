@@ -17,11 +17,11 @@ class DnsApiTypeNotFoundException(ValueError):
 
 
 class DnsApiModel(ModelBase):
-    def get_api_id(self, id: int):
+    def get_api_id(self, apiid: int):
         u = None
 
         try:
-            u = self.ses.query(DnsApi).filter(DnsApi.id == id).one()
+            u = self.ses.query(DnsApi).filter(DnsApi.id == apiid).one()
         except a_exc.NoResultFound as exc:
             raise DnsApiNotFoundException(exc)
 
@@ -34,15 +34,15 @@ class DnsApiModel(ModelBase):
         return DnsApi.get_api_types()
 
 
-    def add_api(self, apikey:str = "", host: str = "127.0.0.1", port: int = -1, password: str = ""):
+    def add_api(self, apitype:int = -1, apikey:str = "", host: str = "", port: int = -1, password: str = ""):
 
-        api_ids = self.get_api_types().keys()
-        if apikey not in api_ids:
+        api_types = map(int, self.get_api_types().keys())
+        if apitype not in api_types:
             raise DnsApiTypeNotFoundException()
 
         try:
             transaction.begin()
-            self.ses.add(DnsApi(apikey = apikey, password = password, host = host, port = port))
+            self.ses.add(DnsApi(apitype = apitype, apikey = apikey, password = password, host = host, port = port))
             transaction.commit()
             log.debug("DNS API added")
         except Exception as exc:

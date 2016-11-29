@@ -14,9 +14,6 @@ from pyramid.security import Authenticated
 
 from pyramid.request import Request
 
-from pyramid.traversal import DefaultRootFactory
-from pyramid.traversal import ResourceTreeTraverser
-
 from beaker.middleware import SessionMiddleware
 
 from sqlalchemy import engine_from_config
