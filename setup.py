@@ -37,8 +37,6 @@ requires = [
     'bcrypt',
     # HTTP:
     'requests',
-    # websocket server:
-    'autobahn',
 ]
 
 entry_points = """
