@@ -4,5 +4,6 @@ cd $VENV
 
 find . -type d -iname "__pycache__" -exec bash -c "echo rm -rf '{}'" \;
 find . -type f -iname "*.pyc" -delete
+find . -type d -empty -delete
 
 cd -
