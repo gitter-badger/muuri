@@ -4,3 +4,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f87ea19ea5c48e881bc7928d1732c89)](https://www.codacy.com/app/raspi/muuri?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=raspi/muuri&amp;utm_campaign=Badge_Grade)
 
 # muuri
+
+## requirements
+
+* https://github.com/pyca/bcrypt
