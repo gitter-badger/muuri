@@ -3,8 +3,8 @@ bin
 lib
 lib64
 share
-.idea
 dist
+.idea/workspace.xml
 
 __pycache__/
 
