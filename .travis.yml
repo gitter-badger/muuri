@@ -24,6 +24,7 @@ matrix:
     allow_failures:
         - env: TOXENV=py36
         - env: TOXENV=py37
+        - env: TOXENV=py3-cover,coverage
 
 install:
   - travis_retry pip install tox
