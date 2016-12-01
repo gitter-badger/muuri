@@ -17,18 +17,10 @@ from pyramid.i18n import TranslationString as _
 
 from pyramid.security import remember
 from pyramid.security import forget
-from pyramid.security import Allow
-from pyramid.security import Authenticated
 from pyramid.security import NO_PERMISSION_REQUIRED
-from pyramid.security import ALL_PERMISSIONS
-
-from beaker.session import Session as beakersession
 
 from . import BaseView
 
-import pyramid.httpexceptions as httpexs
-
-from muuri import AppRootFactory
 
 @view_defaults(permission = NO_PERMISSION_REQUIRED)
 class DefaultViews(BaseView):

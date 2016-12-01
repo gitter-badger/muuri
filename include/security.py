@@ -7,7 +7,6 @@ from pyramid.config import Configurator
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.authentication import SessionAuthenticationPolicy
 
-from pyramid.security import Deny
 from pyramid.security import Authenticated
 
 from pyramid.request import Request

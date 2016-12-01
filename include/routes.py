@@ -3,7 +3,6 @@ import logging
 log = logging.getLogger(__name__)
 
 from pyramid.security import NO_PERMISSION_REQUIRED
-from pyramid.security import Authenticated
 
 from pyramid.config import Configurator
 

@@ -1,15 +1,11 @@
 from sqlalchemy import Column
-from sqlalchemy import Unicode
 from sqlalchemy import Sequence
 from sqlalchemy import Integer
-from sqlalchemy import Index
 from sqlalchemy import CheckConstraint
 from sqlalchemy import ForeignKey
 
 from sqlalchemy import text
 from sqlalchemy.dialects.postgresql import TIMESTAMP
-
-from pyramid.security import Allow
 
 import logging
 

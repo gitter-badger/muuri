@@ -7,7 +7,6 @@ from sqlalchemy import CheckConstraint
 from sqlalchemy import text
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 
-from pyramid.security import Allow
 
 import logging
 
