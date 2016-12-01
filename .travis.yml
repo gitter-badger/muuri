@@ -1,10 +1,26 @@
 language: python
-python:
-  - "3.5"
-  # PyPy versions
-  - "pypy3"
-# command to install dependencies
+sudo: false
+
+matrix:
+    include:
+        - python: 3.5
+          env: TOXENV=py35
+        - python: pypy
+          env: TOXENV=pypy
+        - python: 3.5
+          env: TOXENV=py3-cover,coverage
+        - python: 3.5
+          env: TOXENV=pep8
+        - python: 3.6-dev
+          env: TOXENV=py36
+        - python: nightly
+          env: TOXENV=py37
+    allow_failures:
+        - env: TOXENV=py36
+        - env: TOXENV=py37
+
 install:
-  - pip install -e .
-# command to run tests
-script: pytest
+  - travis_retry pip install tox
+
+script:
+  - travis_retry tox
