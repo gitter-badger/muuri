@@ -65,10 +65,10 @@ def main(global_config, **settings):
     config.include("pyramid_beaker") # Browser session
 
     # App includes
-    config.include('include.urli18n')
-    config.include('include.layouts')
-    config.include('include.routes')
-    config.include('include.security')
+    config.include('muuri.include.urli18n')
+    config.include('muuri.include.layouts')
+    config.include('muuri.include.routes')
+    config.include('muuri.include.security')
 
     engine = engine_from_config(settings, 'sqlalchemy.', implicit_returning = False)
     DBSession.configure(bind = engine)
