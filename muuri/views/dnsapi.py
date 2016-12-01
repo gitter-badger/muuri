@@ -3,13 +3,11 @@ import logging
 log = logging.getLogger(__name__)
 
 from pyramid.view import view_config
-from pyramid.view import view_defaults
 
 from ..models import DnsApiModel
 from . import SecureView
 
 
-@view_defaults(permission = 'logged-in')
 class DnsApiViews(SecureView):
     __parent__ = None
 
@@ -18,15 +16,24 @@ class DnsApiViews(SecureView):
         m = DnsApiModel()
         apilist = m.list_all()
 
-        log.debug(apilist)
+        l = []
+
+        for i in apilist:
+            l.append({
+                'id': i.id,
+                'link': self.request.route_path('dnsapi.zones', id = i.id),
+            })
 
         return {
             'out': '',
-            'apilist': apilist,
+            'apilist': l,
         }
 
     @view_config(route_name = 'dnsapi.add', renderer = 'dnsapi/add.pt')
     def add(self):
+        """
+        Add new DNS API
+        """
         import pyramid.httpexceptions as exc
 
         m = DnsApiModel()
@@ -54,7 +61,14 @@ class DnsApiViews(SecureView):
 
     @view_config(route_name = 'dnsapi.zones', renderer = 'dnsapi/zones.pt')
     def zones(self):
-        pass
+        m = DnsApiModel()
+        api = m.get_api_id(self.request.matchdict['id'])
+
+        zones = []
+
+        return {
+            'zonelist': zones
+        }
 
 
     @view_config(route_name = 'dnsapi.zone', renderer = 'dnsapi/zone.pt')
