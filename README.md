@@ -5,6 +5,9 @@
 
 # muuri
 
+Powered by [Pyramid](https://trypyramid.com/)
+
 ## requirements
 
+* Python 3.5+
 * https://github.com/pyca/bcrypt
