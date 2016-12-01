@@ -2,9 +2,9 @@
 Enable language in URL
 """
 
-from pyramid.request import Request
-
 import logging
+
+from pyramid.request import Request
 
 log = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ from pyramid.config import Configurator
 from muuri import AppRootFactory
 
 
-def add_localized_route(config, name, pattern, factory = AppRootFactory, pregenerator = None, **kw):
+def add_localized_route(config, name, pattern, factory=AppRootFactory, pregenerator=None, **kw):
     orig_factory = factory
 
     def wrapper_factory(request: Request):
@@ -39,7 +39,7 @@ def add_localized_route(config, name, pattern, factory = AppRootFactory, pregene
         new_pattern = pattern
 
     new_pattern = '/{lang}/' + new_pattern
-    config.add_route(name, new_pattern, factory = wrapper_factory, pregenerator = wrapper_pregenerator, **kw)
+    config.add_route(name, new_pattern, factory=wrapper_factory, pregenerator=wrapper_pregenerator, **kw)
 
 
 def includeme(config: Configurator):

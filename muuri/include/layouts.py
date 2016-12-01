@@ -2,14 +2,15 @@
 Default layout(s)
 """
 
-from pyramid_layout.layout import layout_config
-from pyramid.request import Request
-
 import logging
+
+from pyramid.request import Request
+from pyramid_layout.layout import layout_config
 
 log = logging.getLogger(__name__)
 
 from pyramid.config import Configurator
+
 
 @layout_config(name='app', template='muuri:templates/default_layout.pt')
 class AppLayout(object):

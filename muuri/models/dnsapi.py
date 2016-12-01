@@ -12,6 +12,7 @@ from ..database import DnsApi
 class DnsApiNotFoundException(ValueError):
     pass
 
+
 class DnsApiTypeNotFoundException(ValueError):
     pass
 
@@ -33,8 +34,7 @@ class DnsApiModel(ModelBase):
     def get_api_types(self):
         return DnsApi.get_api_types()
 
-
-    def add_api(self, apitype:int = -1, apikey:str = "", host: str = "", port: int = -1, password: str = ""):
+    def add_api(self, apitype: int = -1, apikey: str = "", host: str = "", port: int = -1, password: str = ""):
 
         api_types = map(int, self.get_api_types().keys())
         if apitype not in api_types:
@@ -42,7 +42,7 @@ class DnsApiModel(ModelBase):
 
         try:
             transaction.begin()
-            self.ses.add(DnsApi(apitype = apitype, apikey = apikey, password = password, host = host, port = port))
+            self.ses.add(DnsApi(apitype=apitype, apikey=apikey, password=password, host=host, port=port))
             transaction.commit()
             log.debug("DNS API added")
         except Exception as exc:

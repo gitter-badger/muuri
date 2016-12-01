@@ -9,8 +9,10 @@ from sqlalchemy import func
 from ..models import ModelBase
 from ..database import User
 
+
 class UserNotFoundException(ValueError):
     pass
+
 
 class UserModel(ModelBase):
     def get_user(self, login):
@@ -43,7 +45,7 @@ class UserModel(ModelBase):
 
         try:
             import bcrypt
-            verified = bcrypt.checkpw(password = password, hashed_password = u.password.encode('utf-8'))
+            verified = bcrypt.checkpw(password=password, hashed_password=u.password.encode('utf-8'))
         except Exception as exc:
             raise
 
@@ -60,7 +62,7 @@ class UserModel(ModelBase):
         verified = False
 
         try:
-            verified = bcrypt.checkpw(password = password, hashed_password = encrypted_pw)
+            verified = bcrypt.checkpw(password=password, hashed_password=encrypted_pw)
         except Exception:
             raise
 
@@ -69,7 +71,7 @@ class UserModel(ModelBase):
 
         try:
             transaction.begin()
-            self.ses.add(User(login = login, password = encrypted_pw.decode()))
+            self.ses.add(User(login=login, password=encrypted_pw.decode()))
             transaction.commit()
             log.debug("User added: '%s'", login)
         except Exception as exc:

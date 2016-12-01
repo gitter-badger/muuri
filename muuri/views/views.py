@@ -22,7 +22,7 @@ from pyramid.security import NO_PERMISSION_REQUIRED
 from . import BaseView
 
 
-@view_defaults(permission = NO_PERMISSION_REQUIRED)
+@view_defaults(permission=NO_PERMISSION_REQUIRED)
 class DefaultViews(BaseView):
     __parent__ = None
 
@@ -30,29 +30,29 @@ class DefaultViews(BaseView):
         self.request = request
         self.view_name = type(self).__name__
 
-    @view_config(route_name = 'home', renderer = 'templates/home.pt')
+    @view_config(route_name='home', renderer='templates/home.pt')
     def home(self):
         out = ""
 
         if self.request.authenticated_userid:
-            with subprocess.Popen(["ip", "addr"], stdout = subprocess.PIPE) as proc:
+            with subprocess.Popen(["ip", "addr"], stdout=subprocess.PIPE) as proc:
                 proc.wait(5)
                 out = proc.stdout.read()
 
         return {'out': out}
 
-    @view_config(route_name = 'login', renderer = 'templates/login.pt')
+    @view_config(route_name='login', renderer='templates/login.pt')
     def login(self):
         import pyramid.httpexceptions as exc
 
         if self.request.authenticated_userid is not None:
             # Already logged in -> redirect
-            return exc.HTTPFound(self.request.route_path('home'), comment = "Logged in user tried to log in")
+            return exc.HTTPFound(self.request.route_path('home'), comment="Logged in user tried to log in")
 
         user_not_found_error = {
             'page_background': 'warning',
-            'page_title':      _(u"Login failed"),
-            'page_text':       _(u"Check username and password."),
+            'page_title': _(u"Login failed"),
+            'page_text': _(u"Check username and password."),
         }
 
         form_user = self.request.POST.get('user')
@@ -76,22 +76,22 @@ class DefaultViews(BaseView):
         if form_user == "" and form_password == "":
             return {
                 'page_background': 'warning',
-                'page_title':      _(u"Login failed"),
-                'page_text':       _(u"Fields were empty."),
+                'page_title': _(u"Login failed"),
+                'page_text': _(u"Fields were empty."),
             }
 
         if form_password == "":
             return {
                 'page_background': 'warning',
-                'page_title':      _(u"Login failed"),
-                'page_text':       _(u"Password was empty."),
+                'page_title': _(u"Login failed"),
+                'page_text': _(u"Password was empty."),
             }
 
         if form_user == "":
             return {
                 'page_background': 'warning',
-                'page_title':      _(u"Login failed"),
-                'page_text':       _(u"User was empty."),
+                'page_title': _(u"Login failed"),
+                'page_text': _(u"User was empty."),
             }
 
         try:
@@ -100,7 +100,8 @@ class DefaultViews(BaseView):
             lm = LoginLogModel()
             lm.add_log(ses['userid'])
 
-            response = exc.HTTPFound(location = self.request.route_path('home'), headers = remember(self.request, ses['userid']), comment = "Login")
+            response = exc.HTTPFound(location=self.request.route_path('home'),
+                                     headers=remember(self.request, ses['userid']), comment="Login")
 
             return response
         except UserNotFoundException as exc:
@@ -112,16 +113,15 @@ class DefaultViews(BaseView):
         # Redirect to front page
         return exc.HTTPFound(self.request.route_path('home'))
 
-
-    @view_config(route_name = 'logout', renderer= 'templates/logout.pt', permission = 'logged-in')
+    @view_config(route_name='logout', renderer='templates/logout.pt', permission='logged-in')
     def logout(self):
         """
         Log out
         """
         if self.request.authenticated_userid is None:
             import pyramid.httpexceptions as exc
-            return exc.HTTPFound(self.request.route_path('home'), comment = "Logged out user tried to logout")
+            return exc.HTTPFound(self.request.route_path('home'), comment="Logged out user tried to logout")
 
         # Redirect to front page
         import pyramid.httpexceptions as exc
-        return exc.HTTPFound(self.request.route_path('home'), headers = forget(self.request))
+        return exc.HTTPFound(self.request.route_path('home'), headers=forget(self.request))

@@ -13,10 +13,10 @@ class LoginLogModel(ModelBase):
     def __init__(self):
         pass
 
-    def add_log(self, userid:int):
+    def add_log(self, userid: int):
         try:
             transaction.begin()
-            self.ses.add(LoginLog(userid = userid))
+            self.ses.add(LoginLog(userid=userid))
             transaction.commit()
             log.debug("Login entry added for userid #%s", userid)
         except Exception as exc:

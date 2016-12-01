@@ -7,6 +7,7 @@ log = logging.getLogger(__name__)
 
 from ..database import DBSession
 
+
 class ModelBase():
     ses = DBSession()
 

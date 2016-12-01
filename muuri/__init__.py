@@ -34,6 +34,7 @@ class AppRootFactory:
     def __init__(self, request: Request):
         self.request = request
 
+
 @subscriber(NewRequest)
 def ReqLanguage(event: NewRequest):
     """
@@ -51,7 +52,7 @@ def ReqLanguage(event: NewRequest):
 
 
 def main(global_config, **settings):
-    config = Configurator(settings = settings)
+    config = Configurator(settings=settings)
 
     config.set_root_factory(AppRootFactory)
     config.set_default_permission(Deny)
@@ -62,7 +63,7 @@ def main(global_config, **settings):
     config.include('pyramid_chameleon')
     config.include('pyramid_layout')
     config.include('pyramid_tm')
-    config.include("pyramid_beaker") # Browser session
+    config.include("pyramid_beaker")  # Browser session
 
     # App includes
     config.include('muuri.include.urli18n')
@@ -70,8 +71,8 @@ def main(global_config, **settings):
     config.include('muuri.include.routes')
     config.include('muuri.include.security')
 
-    engine = engine_from_config(settings, 'sqlalchemy.', implicit_returning = False)
-    DBSession.configure(bind = engine)
+    engine = engine_from_config(settings, 'sqlalchemy.', implicit_returning=False)
+    DBSession.configure(bind=engine)
 
     config.scan()
 

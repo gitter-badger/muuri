@@ -10,10 +10,11 @@ from pyramid.request import Request
 from pyramid.view import view_config
 from pyramid.i18n import TranslationString as _
 
-
 # Connection error
 from sqlalchemy.exc import InterfaceError as dberr_interface
-@view_config(context = dberr_interface, renderer = 'templates/error_database.pt')
+
+
+@view_config(context=dberr_interface, renderer='templates/error_database.pt')
 def dberror_interface_err(exc: dberr_interface, request: Request):
     msg = ""
     request.response.status = 500
@@ -29,9 +30,12 @@ def dberror_interface_err(exc: dberr_interface, request: Request):
 
     return {'message': msg}
 
+
 # Table missing, etc
 from sqlalchemy.exc import ProgrammingError as dberr_programming
-@view_config(context = dberr_programming, renderer = 'templates/error_database.pt')
+
+
+@view_config(context=dberr_programming, renderer='templates/error_database.pt')
 def dberror_programming(exc: dberr_programming, request: Request):
     msg = ""
     request.response.status = 500
@@ -45,7 +49,9 @@ def dberror_programming(exc: dberr_programming, request: Request):
 
 # Record not found from database
 from sqlalchemy.orm.exc import NoResultFound as dberr_notfound
-@view_config(context = dberr_notfound, renderer = 'templates/error_database.pt')
+
+
+@view_config(context=dberr_notfound, renderer='templates/error_database.pt')
 def dberror_not_found(exc: dberr_notfound, request: Request):
     request.response.status = 404
     msg = _(u"Record was not found from database")
@@ -55,6 +61,8 @@ def dberror_not_found(exc: dberr_notfound, request: Request):
 
 # DB connection dropped / Pool error
 from sqlalchemy.exc import UnboundExecutionError as dberr_unbound
+
+
 def dberror_unbound_err(exc: dberr_unbound, request: Request):
     request.response.status = 500
     msg = _(u"Binding error")

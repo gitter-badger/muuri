@@ -13,10 +13,9 @@ from pyramid.httpexceptions import HTTPInternalServerError
 from pyramid.view import view_config
 from pyramid.view import notfound_view_config
 from pyramid.view import forbidden_view_config
-from pyramid.security import NO_PERMISSION_REQUIRED
 
 
-@view_config(context = HTTPInternalServerError, renderer = 'templates/500.pt')
+@view_config(context=HTTPInternalServerError, renderer='templates/500.pt')
 def error_internal(request: Request):
     """
     500
@@ -25,7 +24,7 @@ def error_internal(request: Request):
     return {}
 
 
-@notfound_view_config(renderer = 'templates/404.pt')
+@notfound_view_config(renderer='templates/404.pt')
 def error_notfound(request: Request):
     """
     404
@@ -38,18 +37,17 @@ def error_notfound(request: Request):
         from pyramid.threadlocal import get_current_registry
         deflang = get_current_registry().settings['pyramid.default_locale_name']
         redirect = "/" + deflang + "/"
-        return exc.HTTPFound(location = redirect)
+        return exc.HTTPFound(location=redirect)
 
     request.response.status = 404
     return {}
 
 
-@forbidden_view_config(renderer = 'templates/403.pt')
+@forbidden_view_config(renderer='templates/403.pt')
 def error_forbidden(request: Request):
     """
     403
     """
     request.response.status = 403
-
 
     return {}

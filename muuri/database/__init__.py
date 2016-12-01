@@ -28,4 +28,3 @@ Base.query = DBSession.query_property()
 from .user import User
 from .loginlog import LoginLog
 from .dnsapi import DnsApi
-
