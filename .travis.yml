@@ -13,8 +13,8 @@ services:
     - postgresql
 
 before_script:
-  - psql -c 'CREATE ROLE muuri WITH PASSWORD muuri;' -U postgres
-  - psql -c 'CREATE DATABASE muuri OWNER muuri;' -U postgres
+  - psql -c "CREATE ROLE muuri WITH LOGIN PASSWORD 'muuri';" -U postgres
+  - psql -c "CREATE DATABASE muuri OWNER 'muuri';" -U postgres
   - cp development.ini-dist development.ini
   - ./init_db.sh
 
