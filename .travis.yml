@@ -9,6 +9,15 @@ cache:
 before_cache:
     - rm -f $HOME/.cache/pip/log/debug.log
 
+services:
+    - postgresql
+
+before_script:
+  - psql -c 'CREATE ROLE muuri WITH PASSWORD muuri;' -U postgres
+  - psql -c 'CREATE DATABASE muuri OWNER muuri;' -U postgres
+  - cp development.ini-dist development.ini
+  - ./init_db.sh
+
 matrix:
     include:
         - python: 3.5
