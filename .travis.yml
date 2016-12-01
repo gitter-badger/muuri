@@ -16,7 +16,6 @@ before_script:
   - psql -c "CREATE ROLE muuri WITH LOGIN PASSWORD 'muuri' VALID UNTIL 'infinity';" -U postgres
   - psql -c "CREATE DATABASE muuri WITH OWNER=muuri ENCODING='UTF8' LC_COLLATE='en_US.UTF-8' LC_CTYPE='en_US.UTF-8' CONNECTION LIMIT=-1;" -U postgres
   - cp development.ini-dist development.ini
-  - ./init_db.sh
 
 matrix:
     include:
