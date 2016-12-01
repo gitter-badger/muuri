@@ -38,26 +38,37 @@ requires = [
     # HTTP:
     'requests',
 ]
+tests_require = [
+]
+
+testing_extras = tests_require + [
+    'nose',
+    'coverage',
+    'virtualenv',
+]
 
 entry_points = """
 [paste.app_factory]
 main = muuri:main
 """
 
-setup(author = u'Pekka Järvinen',
-      name = 'muuri',
-      version = '0.1',
-      description = 'muuri',
-      long_description = 'muuri',
-      classifiers = classifiers,
-      author_email = 'pekka.jarvinen@gmail.com',
-      url = 'https://raspi.github.io/projects/muuri/',
-      keywords = 'web pyramid python',
-      packages = find_packages(),
-      include_package_data = True,
-      zip_safe = False,
-      install_requires = requires,
-      tests_require = requires,
-      test_suite = "muuri",
-      entry_points = entry_points,
+setup(author=u'Pekka Järvinen',
+      name='muuri',
+      version='0.1',
+      description='muuri',
+      long_description='muuri',
+      classifiers=classifiers,
+      author_email='pekka.jarvinen@gmail.com',
+      url='https://raspi.github.io/projects/muuri/',
+      keywords='web pyramid python',
+      packages=find_packages(),
+      include_package_data=True,
+      zip_safe=False,
+      install_requires=requires,
+      test_suite="muuri",
+      extras_require={
+          'testing': testing_extras,
+      },
+      tests_require=tests_require,
+      entry_points=entry_points,
       )
