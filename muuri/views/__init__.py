@@ -5,6 +5,7 @@ log = logging.getLogger(__name__)
 from pyramid.view import view_defaults
 from pyramid.request import Request as Req
 
+
 class BaseView(object):
     __parent__ = None
     request = None

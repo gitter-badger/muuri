@@ -33,11 +33,12 @@ def error_notfound(request: Request):
         """
         Redirect to default language
         """
-        import pyramid.httpexceptions as exc
         from pyramid.threadlocal import get_current_registry
         deflang = get_current_registry().settings['pyramid.default_locale_name']
         redirect = "/" + deflang + "/"
-        return exc.HTTPFound(location=redirect)
+
+        from pyramid.httpexceptions import HTTPFound
+        return HTTPFound(location=redirect)
 
     request.response.status = 404
     return {}

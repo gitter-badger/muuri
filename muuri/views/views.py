@@ -43,11 +43,11 @@ class DefaultViews(BaseView):
 
     @view_config(route_name='login', renderer='templates/login.pt')
     def login(self):
-        import pyramid.httpexceptions as exc
+        from pyramid.httpexceptions import HTTPFound
 
         if self.request.authenticated_userid is not None:
             # Already logged in -> redirect
-            return exc.HTTPFound(self.request.route_path('home'), comment="Logged in user tried to log in")
+            return HTTPFound(self.request.route_path('home'), comment="Logged in user tried to log in")
 
         user_not_found_error = {
             'page_background': 'warning',
@@ -100,7 +100,7 @@ class DefaultViews(BaseView):
             lm = LoginLogModel()
             lm.add_log(ses['userid'])
 
-            response = exc.HTTPFound(location=self.request.route_path('home'),
+            response = HTTPFound(location=self.request.route_path('home'),
                                      headers=remember(self.request, ses['userid']), comment="Login")
 
             return response
@@ -111,17 +111,17 @@ class DefaultViews(BaseView):
             raise
 
         # Redirect to front page
-        return exc.HTTPFound(self.request.route_path('home'))
+        return HTTPFound(self.request.route_path('home'))
 
     @view_config(route_name='logout', renderer='templates/logout.pt', permission='logged-in')
     def logout(self):
         """
         Log out
         """
+        from pyramid.httpexceptions import HTTPFound
+
         if self.request.authenticated_userid is None:
-            import pyramid.httpexceptions as exc
-            return exc.HTTPFound(self.request.route_path('home'), comment="Logged out user tried to logout")
+            return HTTPFound(self.request.route_path('home'), comment="Logged out user tried to logout")
 
         # Redirect to front page
-        import pyramid.httpexceptions as exc
-        return exc.HTTPFound(self.request.route_path('home'), headers=forget(self.request))
+        return HTTPFound(self.request.route_path('home'), headers=forget(self.request))
