@@ -32,3 +32,5 @@ exclude_paths:
   - "lib/"
   - "lib64/"
   - "share/"
+  - ".tox/"
+  - "__pycache__/"
