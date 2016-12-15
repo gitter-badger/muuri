@@ -101,7 +101,7 @@ class DefaultViews(BaseView):
             lm.add_log(ses['userid'])
 
             response = HTTPFound(location=self.request.route_path('home'),
-                                     headers=remember(self.request, ses['userid']), comment="Login")
+                                 headers=remember(self.request, ses['userid']), comment="Login")
 
             return response
         except UserNotFoundException as exc:
