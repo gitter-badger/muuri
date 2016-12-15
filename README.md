@@ -12,4 +12,5 @@ Powered by [Pyramid](https://trypyramid.com/)
 ## requirements
 
 * Python 3.5+
+* PostgreSQL 9.4+
 * https://github.com/pyca/bcrypt
