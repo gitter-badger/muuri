@@ -1,0 +1,34 @@
+engines:
+
+  pep8:
+    enabled: true
+    checks:
+      E231:
+        enabled: false
+      E402:
+        enabled: false
+      E501:
+        enabled: false
+
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python
+
+  fixme:
+    enabled: true
+
+  radon:
+    enabled: true
+
+ratings:
+  paths:
+  - "**.py"
+
+exclude_paths:
+  - "alembic/versions/"
+  - "bin/"
+  - "lib/"
+  - "lib64/"
+  - "share/"
