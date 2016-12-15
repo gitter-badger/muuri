@@ -49,7 +49,7 @@ class UserModel(ModelBase):
         except Exception as exc:
             raise
 
-        if verified != True:
+        if not verified:
             raise Exception("Coulnd't verify password hash")
 
         return {'userid': u.id}
@@ -66,7 +66,7 @@ class UserModel(ModelBase):
         except Exception:
             raise
 
-        if verified != True:
+        if not verified:
             raise Exception("Coulnd't verify password hash")
 
         try:
