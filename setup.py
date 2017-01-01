@@ -37,6 +37,8 @@ requires = [
     'bcrypt',
     # HTTP:
     'requests',
+    # PowerDNS REST API
+    'pypdnsrest',
 ]
 tests_require = [
 ]
