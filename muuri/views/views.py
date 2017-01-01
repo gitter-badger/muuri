@@ -100,7 +100,14 @@ class DefaultViews(BaseView):
             lm = LoginLogModel()
             lm.add_log(ses['userid'])
 
-            response = HTTPFound(location=self.request.route_path('home'),
+            default_redirect = self.request.route_path('home')
+            redirect = default_redirect
+            form_redirect = form_user = self.request.POST.get('redirect')
+
+            if form_redirect.count("/")  > 0 and form_redirect is not default_redirect:
+                redirect = form_redirect
+
+            response = HTTPFound(location=redirect,
                                  headers=remember(self.request, ses['userid']), comment="Login")
 
             return response
