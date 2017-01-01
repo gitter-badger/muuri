@@ -1,0 +1,26 @@
+<metal:block use-macro="load: ../templates/default_layout.pt" i18n:domain="app">
+    <metal:slot fill-slot="content">
+
+        <metal:block use-macro="load: menu.pt" i18n:domain="app"></metal:block>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2 i18n:translate="">Add zone</h2>
+
+                <a href="${back_link}" i18n:translate="">Back</a>
+
+                <form method="post" action="">
+
+                    <div class="form-group">
+                        <label for="name" i18n:translate="">Zone name</label>
+                        <input name="name" type="text" class="form-control bg-danger" i18n:attributes="placeholder"
+                               placeholder="home.lan" tal:attributes="value request.POST.get('name')" value="" />
+                    </div>
+
+                    <button type="submit" class="btn btn-success" i18n:translate="">Add</button>
+                </form>
+            </div> <!-- col -->
+        </div> <!-- row -->
+
+    </metal:slot>
+</metal:block>

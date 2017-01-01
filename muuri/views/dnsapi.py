@@ -60,15 +60,28 @@ class DnsApiViews(SecureView):
 
     @view_config(route_name='dnsapi.zones', renderer='dnsapi/zones.pt')
     def zones(self):
+        api_id = int(self.request.matchdict['id'])
+
         m = DnsApiModel()
-        api = m.get_api_id(self.request.matchdict['id'])
+        api = m.get_api_id(api_id)
+        log.debug(api)
+        # client = api.client()
 
         zones = []
 
         return {
-            'zonelist': zones
+            'add_link': self.request.route_path('dnsapi.zone-add', id=api_id),
+            'zonelist': zones,
+        }
+
+    @view_config(route_name='dnsapi.zone-add', renderer='dnsapi/add-zone.pt')
+    def add_zone(self):
+        api_id = int(self.request.matchdict['id'])
+
+        return {
+            'back_link': self.request.route_path('dnsapi.zones', id=api_id),
         }
 
     @view_config(route_name='dnsapi.zone', renderer='dnsapi/zone.pt')
     def zone(self):
-        pass
+        return {}

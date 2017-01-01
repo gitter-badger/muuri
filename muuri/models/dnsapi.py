@@ -7,7 +7,7 @@ import sqlalchemy.orm.exc as a_exc
 
 from ..models import ModelBase
 from ..database import DnsApi
-
+from pyramid.i18n import TranslationString as _
 
 class DnsApiNotFoundException(ValueError):
     pass
@@ -18,21 +18,42 @@ class DnsApiTypeNotFoundException(ValueError):
 
 
 class DnsApiModel(ModelBase):
-    def get_api_id(self, apiid: int):
+    @staticmethod
+    def get_api_types():
+        from pypdnsrest.client import PowerDnsRestApiClient
+
+        return {
+            1: {
+                'name': _(u"PowerDNS"),
+                'client': PowerDnsRestApiClient,
+            },
+        }
+
+    @staticmethod
+    def get_api_type(id: int):
+        if not isinstance(id, int):
+            raise TypeError(_(u"Wrong type for id: '{0!s}'. int was expected.").format(type(id)))
+
+        api = DnsApiModel.get_api_types().get(id, None)
+
+        if api is not None:
+            return api
+
+        raise ValueError(_(u"Not found: '{0}'").format(id))
+
+    def get_api_id(self, id: int):
+        if not isinstance(id, int):
+            raise TypeError(_(u"Wrong type for id: '{0!s}'. int was expected.").format(type(id)))
+
         u = None
 
         try:
-            u = self.ses.query(DnsApi).filter(DnsApi.id == apiid).one()
+            u = self.ses.query(DnsApi).filter(DnsApi.id == id).one()
+            return self.get_api_type(int(u.apitype))
         except a_exc.NoResultFound as exc:
             raise DnsApiNotFoundException(exc)
 
-        if u is not None:
-            return u
-
         raise DnsApiNotFoundException()
-
-    def get_api_types(self):
-        return DnsApi.get_api_types()
 
     def add_api(self, apitype: int = -1, apikey: str = "", host: str = "", port: int = -1, password: str = ""):
 

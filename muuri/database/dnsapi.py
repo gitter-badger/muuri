@@ -32,15 +32,9 @@ class DnsApi(Base):
     port = Column(Integer, unique=False, nullable=False, server_default=text("0"))
     added = Column(TIMESTAMP, nullable=False, server_default=text("NOW()"))
 
-    def __init__(self, apitype: int, apikey, password, host: str, port: int):
+    def __init__(self, apitype: int = -1, apikey:str = "", password:str = "", host: str = "", port: int = -1):
         self.apitype = apitype
         self.apikey = apikey
         self.password = password
         self.host = host
         self.port = port
-
-    @staticmethod
-    def get_api_types():
-        return {
-            '1': {'name': _(u"PowerDNS")},
-        }
