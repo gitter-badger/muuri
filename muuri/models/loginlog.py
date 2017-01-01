@@ -18,10 +18,10 @@ class LoginLogModel(ModelBase):
             transaction.begin()
             self.ses.add(LoginLog(userid=userid))
             transaction.commit()
-            log.debug("Login entry added for userid #%s", userid)
+            log.debug("Login entry added for userid #{0}".format(userid))
         except Exception as exc:
             transaction.abort()
-            log.debug("Login entry adding failed for userid #%s", userid)
+            log.debug("Login entry adding failed for userid #{0}".format(userid))
             raise
 
         return True
