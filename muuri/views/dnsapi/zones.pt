@@ -17,7 +17,7 @@
 
                     <table>
                         <tr name="apitype" tal:repeat="item zonelist">
-                            <td><a href="${item.id}">#${item.name}</a>></td>
+                            <td><a href="${item.id}">${item.name}</a></td>
                         </tr>
                     </table>
                 </metal:block>

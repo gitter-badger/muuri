@@ -41,6 +41,24 @@ class DnsApiModel(ModelBase):
 
         raise ValueError(_(u"Not found: '{0}'").format(id))
 
+    def get_api(self, id: int):
+        """
+
+        :param id:
+        :return DnsApi:
+        """
+        if not isinstance(id, int):
+            raise TypeError(_(u"Wrong type for id: '{0!s}'. int was expected.").format(type(id)))
+
+        u = None
+
+        try:
+            return self.ses.query(DnsApi).filter(DnsApi.id == id).one()
+        except a_exc.NoResultFound as exc:
+            raise DnsApiNotFoundException(exc)
+
+        raise DnsApiNotFoundException()
+
     def get_api_id(self, id: int):
         if not isinstance(id, int):
             raise TypeError(_(u"Wrong type for id: '{0!s}'. int was expected.").format(type(id)))

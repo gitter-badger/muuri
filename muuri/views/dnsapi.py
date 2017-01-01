@@ -60,14 +60,18 @@ class DnsApiViews(SecureView):
 
     @view_config(route_name='dnsapi.zones', renderer='dnsapi/zones.pt')
     def zones(self):
+        """
+        List of zones
+        """
         api_id = int(self.request.matchdict['id'])
 
         m = DnsApiModel()
-        api = m.get_api_id(api_id)
-        log.debug(api)
-        # client = api.client()
+        api = m.get_api(api_id)
 
-        zones = []
+        from muuri.lib.dns import PowerDNSRestAPI
+
+        a = PowerDNSRestAPI(api.apikey, api.host, api.port, api.password)
+        zones = a.list_zones()
 
         return {
             'add_link': self.request.route_path('dnsapi.zone-add', id=api_id),
@@ -76,7 +80,28 @@ class DnsApiViews(SecureView):
 
     @view_config(route_name='dnsapi.zone-add', renderer='dnsapi/add-zone.pt')
     def add_zone(self):
+        """
+        Add new zone to DNS server
+        :return:
+        """
         api_id = int(self.request.matchdict['id'])
+
+        m = DnsApiModel()
+        api = m.get_api(api_id)
+
+        from muuri.lib.dns import PowerDNSRestAPI
+
+        a = PowerDNSRestAPI(api.apikey, api.host, api.port, api.password)
+
+        if self.request.method.lower() == 'post':
+            form_name = self.request.POST.get('name')
+            nameservers = []
+            nameservers.append("ns1.{0}".format(form_name))
+            nameservers.append("ns2.{0}".format(form_name))
+
+            a.add_zone(form_name, nameservers)
+            import pyramid.httpexceptions as exc
+            return exc.HTTPFound(location=self.request.route_path('dnsapi.zones', id=api_id), comment="DNS API: Added zone")
 
         return {
             'back_link': self.request.route_path('dnsapi.zones', id=api_id),
