@@ -104,7 +104,7 @@ class DefaultViews(BaseView):
             redirect = default_redirect
             form_redirect = form_user = self.request.POST.get('redirect')
 
-            if form_redirect.count("/")  > 0 and form_redirect is not default_redirect:
+            if form_redirect.count("/") > 0 and form_redirect is not default_redirect:
                 redirect = form_redirect
 
             response = HTTPFound(location=redirect,
