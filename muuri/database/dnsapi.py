@@ -1,6 +1,5 @@
 import logging
 
-from pyramid.i18n import TranslationString as _
 from sqlalchemy import CheckConstraint
 from sqlalchemy import Column
 from sqlalchemy import Integer
@@ -32,7 +31,7 @@ class DnsApi(Base):
     port = Column(Integer, unique=False, nullable=False, server_default=text("0"))
     added = Column(TIMESTAMP, nullable=False, server_default=text("NOW()"))
 
-    def __init__(self, apitype: int = -1, apikey:str = "", password:str = "", host: str = "", port: int = -1):
+    def __init__(self, apitype: int = -1, apikey: str = "", password: str = "", host: str = "", port: int = -1):
         self.apitype = apitype
         self.apikey = apikey
         self.password = password
