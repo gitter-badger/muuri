@@ -9,6 +9,7 @@ from ..models import ModelBase
 from ..database import DnsApi
 from pyramid.i18n import TranslationString as _
 
+
 class DnsApiNotFoundException(ValueError):
     pass
 
