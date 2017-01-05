@@ -22,12 +22,16 @@ class PowerDNSRestAPI(DnsApi):
         from pypdnsrest.client import PowerDnsRestApiClient
         self._c = PowerDnsRestApiClient(apikey, "http", host, port)
 
-
-    def add_zone(self, zone: str, nameservers:list):
+    def add_zone(self, zone: str, nameservers: list):
         return self._c.add_zone(zone, nameservers)
 
     def list_zones(self):
-        zones = self._c.get_zones()
+        zones = []
+        for i in self._c.get_zones():
+            zones.append({
+                'name': i['name'],
+            })
+
         return zones
 
     def delete_zone(self, zone: str):
