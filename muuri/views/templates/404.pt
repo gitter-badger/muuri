@@ -1,19 +1,19 @@
 <metal:block use-macro="load: default_layout.pt" i18n:domain="app">
-  <metal:slot fill-slot="jumbotron">
-    <div class="jumbotron">
-      <div class="container">
-        <h1 i18n:translate="">Error</h1>
-        <p i18n:translate="">Something bad happened</p>
-      </div>
-    </div>
-  </metal:slot>
+    <metal:slot fill-slot="jumbotron">
+        <div class="jumbotron">
+            <div class="container">
+                <h1 i18n:translate="">Error</h1>
+                <p i18n:translate="">Something bad happened</p>
+            </div>
+        </div>
+    </metal:slot>
 
-  <metal:slot fill-slot="content">
-    <div class="row">
-      <div class="col-md-4">
-      <h2 i18n:translate="">404 - File not found</h2>
-      <p i18n:translate="">File not found</p>
-    </div> <!-- col -->
-  </div> <!-- row -->
-  </metal:slot>
+    <metal:slot fill-slot="content">
+        <div class="row">
+            <div class="col-md-4">
+                <h2 i18n:translate="">404 - File not found</h2>
+                <p i18n:translate="">File not found</p>
+            </div> <!-- col -->
+        </div> <!-- row -->
+    </metal:slot>
 </metal:block>

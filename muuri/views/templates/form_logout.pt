@@ -1,5 +1,5 @@
 <metal:block i18n:domain="app">
-  <!-- Logout form -->
-  <a class="btn btn-success" href="/" tal:attributes="href request.route_path('logout')" i18n:translate="">Logout</a>
-  <!-- /Login form -->
- </metal:block>>
+    <!-- Logout form -->
+    <a class="btn btn-success" href="/" tal:attributes="href request.route_path('logout')" i18n:translate="">Logout</a>
+    <!-- /Login form -->
+</metal:block>>

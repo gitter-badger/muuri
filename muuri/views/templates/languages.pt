@@ -1,4 +1,4 @@
 <metal:block i18n:domain="app">
-  <a href="/en/" i18n:translate="">En</a>
-  <a href="/fi/" i18n:translate="">Fi</a>
+    <a href="/en/" i18n:translate="">En</a>
+    <a href="/fi/" i18n:translate="">Fi</a>
 </metal:block>

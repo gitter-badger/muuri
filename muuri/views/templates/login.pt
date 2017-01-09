@@ -1,16 +1,16 @@
 <metal:block use-macro="load: default_layout.pt" i18n:domain="app">
 
-  <metal:slot fill-slot="jumbotron">
-    <metal:block use-macro="load: jumbotron_error.pt"></metal:block>
-  </metal:slot>
+    <metal:slot fill-slot="jumbotron">
+        <metal:block use-macro="load: jumbotron_error.pt"></metal:block>
+    </metal:slot>
 
-  <metal:slot fill-slot="content">
-    <div class="row bg-${page_background}">
-      <div class="col-md-4">
-      <h2>${page_title}</h2>
-      <p>${page_text}</p>
-    </div> <!-- col -->
-  </div> <!-- row -->
-  </metal:slot>
+    <metal:slot fill-slot="content">
+        <div class="row bg-${page_background}">
+            <div class="col-md-4">
+                <h2>${page_title}</h2>
+                <p>${page_text}</p>
+            </div> <!-- col -->
+        </div> <!-- row -->
+    </metal:slot>
 
 </metal:block>
