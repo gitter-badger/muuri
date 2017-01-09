@@ -14,8 +14,8 @@
             <div class="col-md-4">
                 <form method="post" action="">
 
-                    <select class="form-control" name="apitype" tal:repeat="item apitypes">
-                        <option value="${item.id}">${item.name}</option>
+                    <select class="form-control" name="apitype" >
+                        <option tal:repeat="item apitypes" value="${item.id}">${item.name}</option>
                     </select>
 
                     <div class="form-group">
