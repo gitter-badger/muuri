@@ -122,6 +122,18 @@ class DnsApiViews(SecureView):
     def zone(self):
         api_id = int(self.request.matchdict['id'])
 
+        records = [
+            {"id": "SOA", "value": "SOA"},
+            {"id": "A", "value": "A"},
+            {"id": "CNAME", "value": "CNAME"},
+            {"id": "AAAA", "value": "AAAA"},
+            {"id": "NS", "value": "NS"},
+            {"id": "PTR", "value": "PTR"},
+            {"id": "TXT", "value": "TXT"},
+            {"id": "SOA", "value": "SOA"},
+        ]
+
         return {
             'back_link': self.request.route_path('dnsapi.zones', id=api_id),
+            'recordtypes': records,
         }

@@ -9,6 +9,16 @@
 
                 <a href="${back_link}" i18n:translate="">Back</a>
 
+                <form method="post" action="">
+
+                    <select class="form-control" name="apitype">
+                        <option tal:repeat="item recordtypes" value="${item.id}">${item.value}</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-success" i18n:translate="">Add</button>
+                </form>
+
+
             </div> <!-- col -->
         </div> <!-- row -->
 
