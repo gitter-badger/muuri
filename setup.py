@@ -7,10 +7,11 @@ from setuptools import setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-classifiers = ["Programming Language :: Python", "Framework :: Pyramid",
-               "Topic :: Internet :: WWW/HTTP",
-               "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
-               ]
+classifiers = [
+    "Programming Language :: Python", "Framework :: Pyramid",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+]
 
 requires = [
     # WSGI:
@@ -40,6 +41,7 @@ requires = [
     # PowerDNS REST API
     'pypdnsrest',
 ]
+
 tests_require = [
 ]
 
