@@ -29,7 +29,7 @@ class DnsApiViews(SecureView):
             'apilist': l,
         }
 
-    @view_config(route_name='dnsapi.add', renderer='dnsapi/add.pt')
+    @view_config(route_name='dnsapi.add', renderer='dnsapi/add-api.pt')
     def add(self):
         """
         Add new DNS API
@@ -56,7 +56,10 @@ class DnsApiViews(SecureView):
 
             return exc.HTTPFound(location=self.request.route_path('dnsapi.home'), comment="DNS API: Add")
 
-        return {'apitypes': api_types}
+        return {
+            'back_link': self.request.route_path('dnsapi.home'),
+            'apitypes': api_types
+        }
 
     @view_config(route_name='dnsapi.zones', renderer='dnsapi/zones.pt')
     def zones(self):

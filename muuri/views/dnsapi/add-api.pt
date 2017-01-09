@@ -5,6 +5,13 @@
 
         <div class="row">
             <div class="col-md-4">
+                <a href="${back_link}" i18n:translate="">Back</a>
+            </div> <!-- col -->
+        </div> <!-- row -->
+
+
+        <div class="row">
+            <div class="col-md-4">
                 <form method="post" action="">
 
                     <select class="form-control" name="apitype" tal:repeat="item apitypes">
